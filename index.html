@@ -1,0 +1,182 @@
+
+<html>
+<head>
+	<link rel = "stylesheet" type = "text/css" href = "style.css">
+	<script type="text/javascript" src="Calc_Logic.js"></script>
+	<script type="text/javascript" src="controller.js"></script>
+	<script type="text/javascript" src="moving.js"></script>
+</head>
+<body style="background-color:#CAE5E6;">
+
+	<div id = "calc-parent">
+		<div class = "row">
+			<div class = "column ellipsis" id = "calc-display-val">0</div>
+		</div>
+		<div class = "row">
+			<div class = "calc-btn column" id = "calc-clear">C</div>
+			<div class = "calc-btn column" id = "calc-bracket">( )</div>
+			<div class = "calc-btn column" id = "calc-point">.</div>
+			<div class = "calc-btn calc-btn-operator column" id = "calc-div">/</div>
+		</div>
+		<div class = "row">
+			<div class =  "calc-btn calc-btn-num column" id = "calc-seven">7</div>
+			<div class = "calc-btn calc-btn-num column" id = "calc-eight">8</div>
+			<div class = "calc-btn calc-btn-num column" id = "calc-nine">9</div>
+			<div class =  "calc-btn calc-btn-operator column" id = "calc-multiplication">*</div>
+		</div> 
+		<div class = "row">
+			<div class =  "calc-btn calc-btn-num column" id = "calc-four">4</div>
+			<div class =  "calc-btn calc-btn-num column" id = "calc-five">5</div>
+			<div class =  "calc-btn calc-btn-num column" id = "calc-six">6</div>
+			<div class =  "calc-btn calc-btn-operator column" id = "calc-sub">-</div>
+		</div>
+		<div class = "row">
+			<div class =  "calc-btn calc-btn-num column" id = "calc-one">1</div>
+			<div class =  "calc-btn calc-btn-num column" id = "calc-two">2</div>
+			<div class =  "calc-btn calc-btn-num column" id = "calc-three">3</div>
+			<div class =  "calc-btn calc-btn-operator column" id = "calc-add">+</div>
+		</div>
+		<div class = "row">
+			<div class = "calc-btn column" id = "calc-clearOnlyLastDigit"><</div>
+			<div class =  "calc-btn calc-btn-num column" id = "calc-zero">0</div>
+			<div class = "calc-btn column" id = "calc-equal">=</div>
+		</div>
+	</div>
+
+	<script>
+		var oneBtn = document.getElementById('calc-one');
+		var twoBtn = document.getElementById("calc-two");
+		var threeBtn = document.getElementById("calc-three");
+		var fourBtn = document.getElementById("calc-four");
+		var fiveBtn = document.getElementById("calc-five");
+		var sixBtn = document.getElementById("calc-six");
+		var sevenBtn = document.getElementById("calc-seven");
+		var eightBtn = document.getElementById("calc-eight");
+		var nineBtn = document.getElementById("calc-nine");
+		var zeroBtn = document.getElementById("calc-zero")
+
+		var pointBtn = document.getElementById("calc-point")
+		var bracketBtn = document.getElementById("calc-bracket")
+		var equalBtn = document.getElementById("calc-equal")
+		var clearBtn = document.getElementById("calc-clear")
+
+		var clearOnlyLastDigitBtn = document.getElementById("calc-clearOnlyLastDigit")
+		var displayValElement = document.getElementById("calc-display-val")
+
+		var displayVal = "0";
+		var pendingVal;
+		var evalStringArray = [];
+
+
+		var calcNumBtns = document.getElementsByClassName("calc-btn-num");
+		var calcOperatorBtns = document.getElementsByClassName("calc-btn-operator");
+
+		var updateDisplayVal = (clickObj) =>
+		{
+
+			var btnText = clickObj.target.innerText; 
+			if(displayVal === "0")
+			{
+				displayVal = "";
+				displayVal += btnText;
+			}
+			else
+			{
+				if(operandAction(displayVal , btnText))
+				{
+					displayVal += btnText;
+				}
+			}
+			displayValElement.innerText = displayVal;
+		}
+
+
+		var performOperation = (clickObj ) => 
+		{ 
+			var operator = clickObj.target.innerText;
+			if(operatorAction(displayVal , operator))
+			{
+				displayVal+= operator;
+				displayValElement.innerText = displayVal;
+			}  
+		}
+
+		pointBtn.onclick= () => 
+		{			
+			if(dotAction(displayVal,"."))
+			{
+				displayVal += ".";
+				displayValElement.innerText = displayVal;
+			}						
+		}
+
+		clearBtn.onclick = () =>
+		{
+			bracketCount = 0;
+			dotCount = 0;
+			displayVal = "0";
+			displayValElement.innerText = displayVal;
+		}
+
+		clearOnlyLastDigitBtn.onclick = () =>
+		{
+			if(displayVal.length > 0)
+			{
+				if(displayVal[displayVal.length-1] === "." )
+					dotCount -= 1;
+				if(displayVal[displayVal.length-1] === "(" )
+					bracketCount -= 1;
+				if(displayVal[displayVal.length-1] === ")" )
+					bracketCount += 1;
+
+				displayVal = displayVal.substring(0, displayVal.length - 1);
+				if (displayVal.length === 0)
+				{
+					displayVal = "0";
+				}
+				displayValElement.innerText = displayVal;
+
+			}
+		}
+
+		bracketBtn.onclick = (clickObj) =>
+		{
+			var btnText = clickObj.target.innerText; 
+			if(displayVal === "0")
+			{
+				displayVal = "";
+			}
+			displayVal += bracketAction(displayVal , btnText);
+			displayValElement.innerText = displayVal;
+		}
+
+		equalBtn.onclick = () =>
+		{
+			if(displayVal !== "0")
+			{
+				let result = equalAction(displayVal , "=");
+				if (result.length > 0)
+				{
+					displayVal =  "";
+					displayVal += result;
+				}				
+			}
+			displayValElement.innerText = displayVal;
+		}
+
+
+
+		for(let i = 0; i < calcNumBtns.length; i++)
+		{
+			calcNumBtns[i].addEventListener("click" , updateDisplayVal , false);
+		}
+		for(let i = 0 ; i < calcOperatorBtns.length ; i++)
+		{
+			calcOperatorBtns[i].addEventListener("click" , performOperation, false)
+		} 
+
+
+
+	</script>
+</body>
+</html>

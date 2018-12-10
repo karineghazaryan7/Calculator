@@ -1,0 +1,136 @@
+@import <link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet">
+
+body
+{
+	font-family: 'Poiret One', cursive;
+}
+
+.ellipsis 
+{
+  overflow: hidden; /* 1 */
+  white-space: nowrap; /* 2 */
+  text-overflow: ellipsis; /* 3 */
+}
+
+.calc-btn 
+{
+	background-color: #3A4654;
+	color: white ;
+	width: 45px;
+	height: 65px;
+	border: 0.5px solid grey;
+	text-align: center;
+	cursor:pointer;
+	font-size: 22px;
+	font-weight: 100px;
+	padding-top: 17px;
+	position:relative;
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	-moz-box-shadow: 0 10px 6px -6px #777;
+	box-shadow: 0 10px 6px -6px #777;
+}
+
+.calc-btn:hover
+{
+	background-color: #525C65;
+}
+
+.row
+{
+	display: table;
+	table-layout: fixed;
+	width: 260px;
+}
+
+.column
+{
+	display: table-cell;
+}
+
+#calc-equal
+{
+	width: 90.96667px;
+	border-radius: 0 0 10px 0;
+}
+
+.reverse-ellipsis {
+  text-overflow: clip;
+  position: relative;
+  background-color: white;
+}
+
+.reverse-ellipsis:before {
+  content: '\02026';
+  position: absolute;
+  z-index: 1;
+  left: -1em;
+  background-color: inherit;
+  padding-left: 1em;
+  margin-left: 0.5em;
+}
+
+.reverse-ellipsis span {
+  min-width: 100%;
+  position: relative;
+  display: inline-block;
+  float: right;
+  overflow: visible;
+  background-color: inherit;
+  text-indent: 0.5em;
+}
+
+.reverse-ellipsis span:before {
+  content: '';
+  position: absolute;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: inherit;
+  z-index: 200;
+  left: -0.5em;
+}
+
+#calc-display-val
+{
+	height: 80px;
+	color: #A7B4BB;
+	text-align: right;
+	border-left: 1px #525C65;
+	border-right: 1px #525C65;
+	border-top:1px #525C65;
+	font-size: 35px;
+	background-color: #525C65;
+	overflow: hidden;
+	white-space: wrap;
+	padding: 12px;
+	border: 3px;
+	border-radius: 10px 10px 0 0;
+	padding: 1px;
+	line-height: 1em;
+
+
+}
+
+
+.calc-btn-operator
+{
+	background-color: #3A4654;
+	color: #899BA2;
+}
+
+
+#calc-parent
+{
+	margin-left: calc(50% - 130px);
+	margin-top: 150px;
+	
+}
+
+#calc-clear
+{  
+	color: #FA8072;
+}
+#calc-clearOnlyLastDigit
+{
+	border-radius: 0 0 0 10px;
+}
